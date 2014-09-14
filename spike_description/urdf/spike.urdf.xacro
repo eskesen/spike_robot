@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+    - Base      : roomba
+    - Stacks    : circles
+    - 3d Sensor : xtion
+    - Arm       : Lynxmotion AL5D
+-->
+<robot name="spike" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find roomba_description)/urdf/white_roomba.urdf.xacro" />
+</robot>
+
