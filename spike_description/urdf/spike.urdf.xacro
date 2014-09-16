@@ -6,6 +6,35 @@
     - Arm       : Lynxmotion AL5D
 -->
 <robot name="spike" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find roomba_description)/urdf/white_roomba.urdf.xacro" />
+	<xacro:include filename="$(find roomba_description)/urdf/white_roomba.urdf.xacro" />
+
+        <!-- base link, basically the body of the Roomba -->
+        <link name="first_plate">
+                <inertial>
+                        <mass value="2" />
+                        <origin xyz="0 0 0.0" />
+                        <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.5" />
+                </inertial>
+
+                <visual>
+                        <origin xyz=" 0 0 0.0308" rpy="0 0 1.5708" />
+                        <geometry>
+                                <cylinder length="0.0032" radius="0.1524"/>
+                        </geometry>
+                </visual>
+
+                <collision>
+                        <origin xyz="0.0 0.0 0.0308" rpy="0 0 0" />
+                        <geometry>
+                                <cylinder length="0.0032" radius="0.1524"/>
+                        </geometry>
+                </collision>
+        </link>
+
+	<joint name="base_to_first_plate" type="fixed">
+		<parent link="base_link"/>
+		<child link="first_plate"/>
+                <origin xyz="0.0 0.0 0.0816" rpy="0 0 0" />
+	</joint>
 </robot>
 
