@@ -6,9 +6,13 @@
     - Arm       : Lynxmotion AL5D
 -->
 <robot name="spike" xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:include filename="$(find roomba_description)/urdf/white_roomba.urdf.xacro" />
+        <material name="White">
+                <color rgba="1 1 1 1"/>
+        </material>
+   
 
-        <!-- base link, basically the body of the Roomba -->
+	<xacro:include filename="$(find roomba_description)/urdf/roomba.urdf.xacro" />
+
         <link name="first_plate">
                 <inertial>
                         <mass value="2" />
@@ -21,6 +25,9 @@
                         <geometry>
                                 <cylinder length="0.0032" radius="0.1524"/>
                         </geometry>
+		        <material name="White"/>
+   
+
                 </visual>
 
                 <collision>
@@ -36,5 +43,41 @@
 		<child link="first_plate"/>
                 <origin xyz="0.0 0.0 0.0816" rpy="0 0 0" />
 	</joint>
+
+
+        <link name="top_plate">
+                <inertial>
+                        <mass value="2" />
+                        <origin xyz="0 0 0.0" />
+                        <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.5" />
+                </inertial>
+
+                <visual>
+                        <origin xyz=" 0 0 0.0" rpy="0 0 1.5708" />
+                        <geometry>
+                                <box size=".1 .1 .001"/>
+                        </geometry>
+		        <material name="White"/>
+   
+
+                </visual>
+
+                <collision>
+                        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+                        <geometry>
+                                <box size=".1 .1 .001"/>
+                        </geometry>
+                </collision>
+        </link>
+
+	<joint name="first_plate_to_top_plate" type="fixed">
+		<parent link="first_plate"/>
+		<child link="top_plate"/>
+                <origin xyz="-0.1 0.0 0.1016" rpy="0 0 0" />
+	</joint>
+
+        <xacro:include filename="$(find turtlebot_xtion_top_description)/urdf/xtion.xacro" />
+
+   	<xacro:xtion parent="top_plate" x_loc="0" y_loc="0" z_loc="0" rr="0" rp="0" ry="0"/>
 </robot>
 
