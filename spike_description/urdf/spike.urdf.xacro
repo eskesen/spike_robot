@@ -9,7 +9,10 @@
         <material name="White">
                 <color rgba="1 1 1 1"/>
         </material>
-   
+        
+       <material name="Blue">
+                <color rgba="0 0.75 1 1"/>
+        </material>
 
 	<xacro:include filename="$(find roomba_description)/urdf/roomba.urdf.xacro" />
 
@@ -21,7 +24,7 @@
                 </inertial>
 
                 <visual>
-                        <origin xyz=" 0 0 0.0308" rpy="0 0 1.5708" />
+                        <origin xyz=" 0 0 0" rpy="0 0 1.5708" />
                         <geometry>
                                 <cylinder length="0.0032" radius="0.1524"/>
                         </geometry>
@@ -31,7 +34,7 @@
                 </visual>
 
                 <collision>
-                        <origin xyz="0.0 0.0 0.0308" rpy="0 0 0" />
+                        <origin xyz="0.0 0.0 0" rpy="0 0 0" />
                         <geometry>
                                 <cylinder length="0.0032" radius="0.1524"/>
                         </geometry>
@@ -41,10 +44,26 @@
 	<joint name="base_to_first_plate" type="fixed">
 		<parent link="base_link"/>
 		<child link="first_plate"/>
-                <origin xyz="0.0 0.0 0.0816" rpy="0 0 0" />
+		
+                <origin xyz="0.0 0.0 0.1124" rpy="0 0 0" />
 	</joint>
 
-
+        <link name="imu_link">
+                <visual>
+                        <geometry>
+                                <box size=".0159 .0206 .0033"/>
+                        </geometry>
+		                <material name="Blue"/>
+                </visual>
+        </link>
+    	
+    	<joint name="first_plate_to_imu" type="fixed">
+			<parent link="first_plate"/>
+			<child link="imu_link"/>
+            <origin xyz="0 0 0.003" rpy="0 0 0" />
+        </joint>
+        
+        
         <link name="top_plate">
                 <inertial>
                         <mass value="2" />
